@@ -4,21 +4,15 @@ error_reporting(~0);
 ini_set('display_errors', 1);
 
 $getUrlParameters = get_query_string();
-echo $getUrlParameters;
 $urlStaticApiUrl = 'http://api.tvmaze.com/search/shows?q='.$getUrlParameters;
 
-/*$url = ('http://api.tvmaze.com/search/shows?q=flash');*/
-
 $json = file_get_contents($urlStaticApiUrl);
+$returnedValues = json_decode($json, TRUE);
 
-$retValue = json_decode($json, TRUE);
-
-for ($x = 0; $x < count($retValue); $x++) {
-    $arrayName[$x] = $retValue[$x]['show']['name'];
-    $arrayScore[$x] = $retValue[$x]['score'];
-
-    $arrayTotal["name"] = $arrayName;
-    $arrayTotal["score"] = $arrayScore;
+//Assign to an array names and scores
+for ($x = 0; $x < count($returnedValues); $x++) {
+    $arrayTotal["name"][$x] = $returnedValues[$x]['show']['name'];
+    $arrayTotal["score"][$x] = $returnedValues[$x]['score'];
 }
 
 //Counter for score loop
@@ -45,14 +39,13 @@ function foundStringCaseInsensitive($fullString, $searchString)
 }
 
 function get_query_string(){
-    $letra = explode("=",$_SERVER['QUERY_STRING']);
-    $arr = explode("&",$_SERVER['QUERY_STRING']);
+    $firstQuery = explode("=",$_SERVER['QUERY_STRING']);
+    $arguments = explode("&",$_SERVER['QUERY_STRING']);
 
-    if (count($arr) > 1 OR $letra[0] != 'q'){
+    if (count($arguments) > 1 OR $firstQuery[0] != 'q'){
         echo "invalid response";
         exit;
     }else{
-/*        return end($arr)."<br>";*/
     return $_GET['q'];
     }
 
