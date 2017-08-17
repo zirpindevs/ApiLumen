@@ -6,4 +6,7 @@ use Laravel\Lumen\Application;
 
 $app->get('/', 'MyController@index');
 
-$app->get('/ajax', 'MyController@ajax');
+$app->get('/get_query_string', 'MyController@get_query_string');
+
+$app->get('/foundStringCaseInsensitive', 'MyController@foundStringCaseInsensitive');
+;
