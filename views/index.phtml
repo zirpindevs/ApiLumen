@@ -1,1 +1,14 @@
-<h1><?= $hello_world ?></h1>
+<?php
+
+
+if (isset($_GET['search'])) {
+$urlVar = $_GET['search'];
+}
+else
+echo "invalid response";
+
+$url = ('http://api.tvmaze.com/search/shows?q='.$urlVar);
+$json = file_get_contents($url);
+$retValue = json_decode($json, TRUE);
+
+var_dump($retValue);
