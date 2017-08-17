@@ -11,10 +11,6 @@ require_once 'vendor/lumen/autoload.php';
 
 use Laravel\Lumen\Application;
 
-$autoloader->addNamespace('controllers', 'controllers');
-$autoloader->register();
-
-
 /*
 |--------------------------------------------------------------------------
 | Enviroment config file intantiation
@@ -22,7 +18,7 @@ $autoloader->register();
 | @see https://lumen.laravel.com/docs/configuration#environment-configuration
 */
 try {
-    (new \Dotenv\Dotenv(LUMEN_PATH, LUMEN_ENV_FILENAME))->load();
+    (new \Dotenv\Dotenv(\app\ApiApp::LUMEN_PATH, \app\ApiApp::LUMEN_ENV_FILENAME))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -104,7 +100,7 @@ $app->singleton(
 $app->group(
     [
         'namespace' => 'controllers',
-        'prefix' => getBaseUrl()
+        'prefix' => \app\ApiApp::getBaseUrl()
     ],
     function (Application $app) {
         require __DIR__ . '/routes.php';
