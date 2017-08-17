@@ -1,4 +1,5 @@
 <?php
+
 # Enable Error Reporting and Display:
 error_reporting(~0);
 ini_set('display_errors', 1);
@@ -30,6 +31,7 @@ foreach ($arrayTotal['name'] as $valueName) {
     $counter++;
 }
 
+
 function foundStringCaseInsensitive($fullString, $searchString)
 {
     $positionFound = strripos($fullString, $searchString);
@@ -38,15 +40,16 @@ function foundStringCaseInsensitive($fullString, $searchString)
     }
 }
 
-function get_query_string(){
-    $firstQuery = explode("=",$_SERVER['QUERY_STRING']);
-    $arguments = explode("&",$_SERVER['QUERY_STRING']);
+function get_query_string()
+{
+    $firstQuery = explode("=", $_SERVER['QUERY_STRING']);
+    $arguments = explode("&", $_SERVER['QUERY_STRING']);
 
-    if (count($arguments) > 1 OR $firstQuery[0] != 'q'){
+    if (count($arguments) > 1 OR $firstQuery[0] != 'q') {
         echo "invalid response";
         exit;
-    }else{
-    return $_GET['q'];
+    } else {
+        return $_GET['q'];
     }
 
 }
