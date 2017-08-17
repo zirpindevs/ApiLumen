@@ -36,4 +36,10 @@ foreach ($arrayTotal['name'] as $valueName) {
     $counter++;
 }
 
-
+function foundStringCaseInsensitive($fullString, $searchString)
+{
+    $positionFound = strripos($fullString, $searchString);
+    if (is_int($positionFound)) {
+        return $fullString;
+    }
+}
