@@ -28,19 +28,7 @@ class MyController extends Controller
      */
     public function index(Request $request, Response $response)
     {
-        return $this->renderer->render($response, 'views/index.phtml', [
-            'hello_world' => 'Hello World'
-        ]);
+        return $this->renderer->render($response, 'views/index.phtml');
 
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function ajax(Request $request, Response $response)
-    {
-        return ["success" => true, "text" => "Hello World"];
     }
 }
