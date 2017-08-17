@@ -1,14 +1,16 @@
 <?php
+# Enable Error Reporting and Display:
+error_reporting(~0);
+ini_set('display_errors', 1);
 
+$getUrlParameters = get_query_string();
+echo $getUrlParameters;
+$urlStaticApiUrl = 'http://api.tvmaze.com/search/shows?q='.$getUrlParameters;
 
-if (isset($_GET['search'])) {
-$urlVar = $_GET['search'];
-}
-else
-echo "invalid response";
+/*$url = ('http://api.tvmaze.com/search/shows?q=flash');*/
 
-$url = ('http://api.tvmaze.com/search/shows?q='.$urlVar);
-$json = file_get_contents($url);
+$json = file_get_contents($urlStaticApiUrl);
+
 $retValue = json_decode($json, TRUE);
 
 for ($x = 0; $x < count($retValue); $x++) {
@@ -20,13 +22,11 @@ for ($x = 0; $x < count($retValue); $x++) {
 }
 
 //Counter for score loop
-
 $counter = 0;
 
 //Array to filter non type get values
-
 foreach ($arrayTotal['name'] as $valueName) {
-    $valueBack = foundStringCaseInsensitive($valueName, $_GET['search']);
+    $valueBack = foundStringCaseInsensitive($valueName, $_GET['q']);
     if ($valueBack != null) {
         $finalArrayName[$valueName] = $valueBack;
         $finalArrayScore[$valueName] = $arrayTotal['score'][$counter];
@@ -42,4 +42,18 @@ function foundStringCaseInsensitive($fullString, $searchString)
     if (is_int($positionFound)) {
         return $fullString;
     }
+}
+
+function get_query_string(){
+    $letra = explode("=",$_SERVER['QUERY_STRING']);
+    $arr = explode("&",$_SERVER['QUERY_STRING']);
+
+    if (count($arr) > 1 OR $letra[0] != 'q'){
+        echo "invalid response";
+        exit;
+    }else{
+/*        return end($arr)."<br>";*/
+    return $_GET['q'];
+    }
+
 }
